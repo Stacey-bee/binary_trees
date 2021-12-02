@@ -3,6 +3,7 @@
 /**
 * bst_insert - a function that inserts a new node in search tree
 * @tree: The root node
+* @value: new node's value
 * Return: The new node
 */
 
@@ -13,45 +14,37 @@ bst_t *bst_insert(bst_t **tree, int value)
 
 	if (tree == NULL)
 		return (NULL);
-
 	duplicate = bs_tree_preorder((*tree), value);
-	printf("\nduplicated == %d\n", duplicate);
-
 	if (duplicate == 0)
 		return (NULL);
-
 	if ((*tree) == NULL)
 	{
-		new = binary_tree_node((*tree), value);
-		(*tree) = new;
+		(*tree) = new = binary_tree_node((*tree), value);
 		return (new);
 	}
-
+	if (value == (*tree)->n)
+		return (NULL);
 	if (value < (*tree)->n)
 	{
 		if ((*tree)->left == NULL)
 		{
 			new = (*tree)->left = binary_tree_node((*tree), value);
-			/*(*tree)->left = new;*/
-			n = (*tree)->n;
 			return (new);
 		}
-		bst_insert(&(*tree)->left, value);
-		return (*tree);
+		new = bst_insert(&(*tree)->left, value);
+		return (new);
 	}
 	else if (value > (*tree)->n)
 	{
 		if ((*tree)->right == NULL)
 		{
-			new = (*tree)->right = binary_tree_node((*tree), value);
-		        n = (*tree)->n;
+			new = binary_tree_node((*tree), value);
+			(*tree)->right = new;
 			return (new);
 		}
-		bst_insert(&(*tree)->right, value);
-		return (*tree);
+		new = bst_insert(&(*tree)->right, value);
+		return (new);
 	}
-	else if (value == (*tree)->n)
-		return (NULL);
 	if ((*tree) == NULL)
 		return (NULL);
 	return (*tree);
@@ -73,10 +66,7 @@ int bs_tree_preorder(bst_t *tree, int n)
 		return (1);
 
 	if (tree->n == n)
-	{
-		printf("duplicate found");
 		return (0);
-	}
 
 	leftr = bs_tree_preorder(tree->left, n);
 	rightr = bs_tree_preorder(tree->right, n);
