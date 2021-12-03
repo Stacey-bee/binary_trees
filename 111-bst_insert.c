@@ -1,74 +1,51 @@
 #include "binary_trees.h"
 
 /**
-* bst_insert - a function that inserts a new node in search tree
-* @tree: The root node
-* @value: new node's value
-* Return: The new node
-*/
-
+ * bst_insert - inserts a value in a Binary Search Tree
+ * @tree: double pointer to the root node of the BST to insert the value
+ * @value: value to store in the node to be inserted
+ *
+ * Description: If the address stored in tree is NULL, the created node must
+ * become the root node. If the value is already present in the tree, it must
+ * be ignored
+ *
+ * Return: a pointer to the created node, or NULL on failure
+ */
 bst_t *bst_insert(bst_t **tree, int value)
 {
-	int duplicate = 0;
-	bst_t *new;
+	bst_t *tmp;
 
-	if (tree == NULL)
-		return (NULL);
-	duplicate = bs_tree_preorder((*tree), value);
-	if (duplicate == 0)
-		return (NULL);
-	if ((*tree) == NULL)
+	if (tree)
 	{
-		(*tree) = new = binary_tree_node((*tree), value);
-		return (new);
-	}
-	if (value == (*tree)->n)
-		return (NULL);
-	if (value < (*tree)->n)
-	{
-		if ((*tree)->left == NULL)
+		if (*tree == NULL)
 		{
-			new = (*tree)->left = binary_tree_node((*tree), value);
-			return (new);
+			*tree = (bst_t *)binary_tree_node(NULL, value);
+			return (*tree);
 		}
-		new = bst_insert(&(*tree)->left, value);
-		return (new);
-	}
-	else if (value > (*tree)->n)
-	{
-		if ((*tree)->right == NULL)
+		tmp = *tree;
+		while (tmp)
 		{
-			new = binary_tree_node((*tree), value);
-			(*tree)->right = new;
-			return (new);
+			if (tmp->n == value)
+				break;
+			if (tmp->n > value)
+			{
+				if (!tmp->left)
+				{
+					tmp->left = (bst_t *)binary_tree_node(tmp, value);
+					return (tmp->left);
+				}
+				tmp = tmp->left;
+			}
+			else if (tmp->n < value)
+			{
+				if (!tmp->right)
+				{
+					tmp->right = (bst_t *)binary_tree_node(tmp, value);
+					return (tmp->right);
+				}
+				tmp = tmp->right;
+			}
 		}
-		new = bst_insert(&(*tree)->right, value);
-		return (new);
 	}
-	if ((*tree) == NULL)
-		return (NULL);
-	return (*tree);
-}
-
-/**
- * bs_tree_preorder - goes through a binary tree
- * using pre-order traversal to find duplicate
- * @tree: pointer to the root node
- * @n: value to check for
- * Return: 0 for true or 1 for false
- */
-
-int bs_tree_preorder(bst_t *tree, int n)
-{
-	int leftr, rightr;
-
-	if (tree == NULL)
-		return (1);
-
-	if (tree->n == n)
-		return (0);
-
-	leftr = bs_tree_preorder(tree->left, n);
-	rightr = bs_tree_preorder(tree->right, n);
-	return (leftr * rightr);
+	return (NULL);
 }
