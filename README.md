@@ -4,7 +4,7 @@
 ## Project Details
 
 ### Description
-![image](https://www.holbertonschool.com/assets/holberton-logo-1cc451260ca3cd297def53f2250a9794810667c7ca7b5fa5879a569a457bf16f.png)
+![image](https://camo.githubusercontent.com/e9cf03aa5a3d25250c16c8b0e9af71b6fe1c3a75cafe5a74c05be352186959db/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f6f564a785431796e37767761454d38743941354d474c36656d47306a2d5f75714861354838696b574c766c364b612d6e566d554a5a626c715744715069592d53366974504c6e5a4e676363387276694b3841565436356c5f61337a48697963747779383d7330)
 Project completed for [Holberton School](https://github.com/holbertonschool/)
 
 ### What students learn from this project
